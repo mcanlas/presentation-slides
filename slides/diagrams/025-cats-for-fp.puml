@@ -1,0 +1,37 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< Library >> {
+  fontColor white
+  backgroundColor #586ba4
+}
+
+skinparam component<< New idea >> {
+  fontColor black
+  backgroundColor #ffe696
+}
+
+skinparam component<< Language >> {
+  fontColor white
+  backgroundColor #d95448
+}
+
+package fp as "Functional programming" {
+  component cats as "cats" << Library >>
+  component scalafp as "Scala" << Language >>
+  cats --> scalafp
+}
+
+package oop as "Object-oriented programming" {
+  component scalaoop as "Scala" << Language >>
+  interface hopeless as "Hopelessness"
+  hopeless --> scalaoop
+}
+@enduml

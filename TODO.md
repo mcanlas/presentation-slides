@@ -1,0 +1,7 @@
+- the structure is the type class
+- but you can prove it for new classes (new operator required)
+- a hint of scala kinda FP
+- inner/outer structure
+- primitive types, third-party types, new types
+- list/vector/array/option/try
+- future/set bad

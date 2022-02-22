@@ -1,0 +1,28 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  fontColor white
+  backgroundColor #586ba4
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< Paradigm >> {
+  fontColor black
+  backgroundColor #ffe696
+}
+
+skinparam package {
+  fontColor white
+  backgroundColor #d95448
+}
+
+package scala as "Scala" {
+  component oop as "Object-oriented\nprogramming" << Paradigm >>
+  component fp as "Functional\nprogramming" << Paradigm >>
+}
+
+@enduml

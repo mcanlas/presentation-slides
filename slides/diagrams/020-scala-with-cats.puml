@@ -1,0 +1,34 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< Library >> {
+  fontColor white
+  backgroundColor #586ba4
+}
+
+skinparam component<< New idea >> {
+  fontColor black
+  backgroundColor #ffe696
+}
+
+skinparam component<< Language >> {
+  fontColor white
+  backgroundColor #d95448
+}
+
+component scala as "Scala" << Language >>
+
+component cats as "cats" << Library >>
+component scalatest as "ScalaTest" << Library >>
+
+cats --> scala
+scalatest --> scala
+
+@enduml

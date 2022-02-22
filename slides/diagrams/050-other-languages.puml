@@ -1,0 +1,54 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  fontColor white
+  backgroundColor #586ba4
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< New idea >> {
+  fontColor black
+  backgroundColor #ffe696
+}
+
+skinparam component<< Language >> {
+  fontColor white
+  backgroundColor #d95448
+}
+
+component scala as "Scala" << Language >>
+
+component cats as "cats"
+
+component cats_effect as "cats-effect"
+
+cats_effect --> cats
+
+component scalatest as "ScalaTest" << Library >>
+
+cats --> scala
+scalatest --> scala
+
+component functor as "Functor" << New idea >>
+component monad as "Monad" << New idea >>
+
+component side_effect as "Side effect" << New idea >>
+side_effect --> cats_effect
+
+interface category_theory as "Category theory"
+
+functor --> category_theory
+monad --> category_theory
+
+component haskell as "Haskell" << Language >>
+component kotlin as "Kotlin" << Language >>
+
+category_theory --> cats
+category_theory ---> haskell
+category_theory ---> kotlin
+
+@enduml
