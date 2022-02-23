@@ -58,6 +58,8 @@ Scala is a multi-paradigm language.
 
 ## 📚 Not covered
 
+FP stuff:
+
 - **referential transparency**
   - **immutability**
   - **side-effect** management
@@ -233,7 +235,7 @@ Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
 
 ----
 
-- Also called providing "proof" or "evidence" with a **type class instance**
+- Also called providing "proof" or "evidence" to the compiler with a **type class instance**
 - Analogous to implementing an `abstract` `class`/`trait`
 
 ----
@@ -392,7 +394,7 @@ optionString.map(_ + " phd")
 
 **Laws**: other structural properties types need to obey
 
-`Set` and `Future` are not "lawful" functors despite having `map`
+❌ `Set` and `Future` are not "lawful" functors despite having `map`
 
 ----
 
@@ -639,7 +641,26 @@ Also called **pure** or **point**
 
 ---
 
-## I'm a `cats` person
+## But wait
+
+----
+
+### 🤬 "You don't need `cats` to call `map` on `List`"
+
+----
+
+## You're right ✅
+
+----
+
+## 😸 `cats` provides:
+
+- Consistent interfaces to types beyond Scala's built-in types
+- Stronger, "more correct" design choices where Scala falls short
+
+---
+
+## I'm a `cats` person 🐈
 
 ----
 
@@ -659,6 +680,6 @@ Also called **pure** or **point**
 
 ----
 
-- It provides by **type classes** and **evidence** for them, for built-in Scala types.
-- Common type classes in big data are `Semigroup` and `Monoid`.
-- Common type classes everywhere are `Functor`, `Applicative`, and `Monad`.
+- It provides **type classes** and **evidence** for them, for built-in Scala types
+- Common type classes in **big data** are `Semigroup` and `Monoid`
+- The most common everywhere are `Functor`, `Applicative`, and `Monad`
