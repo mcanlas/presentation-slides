@@ -52,7 +52,7 @@ Scala is a multi-paradigm language.
 
 ![](diagrams/025-cats-for-fp.png)
 
-`cats` enables a more consistent experience with functional programming
+`cats` reinforces **functional programming** design patterns
 
 ----
 
@@ -130,7 +130,7 @@ Not every language can support these new ideas
 
 ----
 
-### Natural numbers, rational numbers, and `String`s are **structured similarly**.
+### Natural numbers, rational numbers, and `String`s are **structured similarly**
 
 ----
 
@@ -217,14 +217,17 @@ Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
 `CanPlus[_]` also provides a `|+|` operator to all types that support this structure...
 
 ...regardless of the type's owner.
+<!-- .element: class="fragment" -->
 
 ----
 
 ### `CanPlus[_]` is an example of a **type class**
 
 ...a compiler-supported feature in Scala/Haskell used to describe the structure of other types
+<!-- .element: class="fragment" -->
 
 ...analagous to the way `abstract class`es or `trait`s describe structure for first-party, object-oriented types
+<!-- .element: class="fragment" -->
 
 
 ----
@@ -273,7 +276,9 @@ Split into two groups
 
 ----
 
-## Group #1: **Big data** type classes
+### Group 1️⃣
+
+## **Big data** type classes
 
 ![](diagrams/200-semigroup.png)
 
@@ -356,7 +361,7 @@ with an "inside" and an "outside"
 
 ----
 
-### Mapping cannot influence the container
+### Mapping **cannot** influence the container
 
 ```scala
 // Some => Some
@@ -367,6 +372,9 @@ optionInt.map(_ + 1)
 strings(_ + " phd")
 ```
 
+Highly targeted **separation of concerns**
+<!-- .element: class="fragment" -->
+
 ----
 
 ### Also true for every kind of `List[_]`
@@ -374,6 +382,7 @@ strings(_ + " phd")
 ```scala
 // Some => Some
 // or None => None
+
 optionInt.map(_ + 1)
 optionDouble.map(_ + 3.0)
 optionString.map(_ + " phd")
@@ -395,6 +404,7 @@ optionString.map(_ + " phd")
 **Laws**: other structural properties types need to obey
 
 ❌ `Set` and `Future` are not "lawful" functors despite having `map`
+<!-- .element: class="fragment" -->
 
 ----
 
@@ -417,6 +427,13 @@ optionString.map(_ + " phd")
 
 A "strategy" `F` for producing/dealing with values of `A`
 
+----
+
+```scala
+type F[A] = Either[E, A]
+type G[A] = B => A
+```
+
 ---
 
 # Baking 🍰
@@ -437,7 +454,7 @@ A "strategy" `F` for producing/dealing with values of `A`
 
 ----
 
-## Step N depends on step N - 1
+## Step N **depends on** step N - 1
 
 ----
 
@@ -448,6 +465,10 @@ val xy =
     y <- List(1, 2)
   } yield (x, y)
 ```
+
+Length (or structure) of `xy` depends on each step
+
+`4 * 2 == 8`
 
 ----
 
@@ -477,23 +498,9 @@ Aka **syntactic sugar** (not exclusive to `cats` or Scala)
 ----
 
 ```scala
-val xy = 
-  for {
-    x <- List("a", "b", "c", "d")
-    y <- List(1, 2)
-  } yield (x, y)
-```
-
-Length (or structure) of `xy` depends on each step
-
-`4 * 2 == 8`
-
-----
-
-```scala
 val xyz =
   for {
-    x <- optionX
+    x <- optionX // what if None?
     y <- optionY
     z <- optionZ
   } yield (x, y, z)
@@ -506,7 +513,7 @@ Can also "fail fast"
 ----
 
 ```scala
-def bannerPos(n: Int): Option[String] =
+def posBanner(n: Int): Option[String] =
   if (n > 0)
     Some("yay")
   else
@@ -515,7 +522,7 @@ def bannerPos(n: Int): Option[String] =
 val banner =
   for {
     n <- optionN
-    pos <- bannerPos(n)
+    pos <- posBanner(n) // <-- spicy examination
   } yield pos
 ```
 
@@ -523,22 +530,26 @@ Examination of `n` can influence the optionality (or structure) of `somePos`
 
 ----
 
+### `def posBanner`
 ### `(n: Int) => Option[String]`
 
 ----
 
 #### `(n: Int) => Option[String]`
-### `A => F[B]`
+## `A => F[B]`
 
 ----
 
-### `A => F[B]`
+## `A => F[B]`
 
 ```scala
 def flatMap(f: A => F[B]): F[B]
 ```
 
 The structure `F[B]` depends on `A`
+
+But also cannot "see" the previous `F`
+<!-- .element: class="fragment" -->
 
 ----
 
@@ -555,6 +566,10 @@ The structure `F[B]` depends on `A`
 
 ----
 
+### 📗 `for-comprehension`s only work with monads of the **same type**
+
+----
+
 ### 🤔 Applicative
 
 - Hardest to build an intuition for
@@ -566,7 +581,7 @@ The structure `F[B]` depends on `A`
 ## `A => F[A]`
 #### `CanWrap[_]`
 
-Also called **pure** or **point**
+Also called **pure**
 
 ----
 
@@ -582,7 +597,7 @@ Also called **pure** or **point**
 (fa: F[A], fb: F[B]) => F[(A, B)]
 ```
 
-- The outsides can interact (new)
+- The outsides can interact (new ✨)
 - The insides can interact (from `map`)
 - But the inside cannot affect the outside (unlike `flatMap`)
 
@@ -596,13 +611,14 @@ Also called **pure** or **point**
 
 ----
 
-### As long as it is a `Monad`...
+### 🤷🏽 "As long as it's a `Monad`..."
 
 ----
 
+- Highly consistent
 - Can use `for-comprehension`
 - Can use `map`
-- Is highly composable and consistent, like "legos"
+- Highly composable, like "legos"
 - Leverages previous experience
 
 ----

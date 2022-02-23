@@ -22,7 +22,7 @@ component functor as "Functor"
 note right of functor: Inner structure can be changed with map
 
 component applicative as "Applicative"
-note right of applicative: Outer structures can interact
+note right of applicative: Can wrap; and outer structures can interact
 
 component monad as "Monad"
 note right of monad: Inner structure can influence outer structures with flatMap
