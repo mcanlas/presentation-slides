@@ -11,20 +11,20 @@ skinparam component {
 }
 
 component semigroup as "Semigroup"
-note left of semigroup: "Can plus"
+note left of semigroup: Can plus
 
 component monoid as "Monoid"
-note left of monoid: "Has zero"
+note left of monoid: Has zero
 
 semigroup --> monoid
 
 component functor as "Functor"
-note right of functor: "Can map"
+note right of functor: Can map
 
 component applicative as "Applicative"
 
 component monad as "Monad"
-note right of monad: "Can flatMap"
+note right of monad: Can flatMap
 
 functor --> applicative
 applicative --> monad

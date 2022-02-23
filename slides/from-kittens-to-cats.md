@@ -590,7 +590,7 @@ Also called **pure** or **point**
 
 ---
 
-## Why `cats`?
+## Why `cats`? 😺
 
 ----
 
@@ -600,8 +600,7 @@ Also called **pure** or **point**
 
 - Can use `for-comprehension`
 - Can use `map`
-- Can "fail fast"
-- Is highly composable
+- Is highly composable and consistent, like "legos"
 - Leverages previous experience
 
 ----
@@ -640,12 +639,26 @@ Also called **pure** or **point**
 
 ---
 
+## I'm a `cats` person
+
+----
+
+## `cats` "platform"
+
+----
+
+![](diagrams/300-cats-platform.png)
+
+---
+
 # Recap
 
 ----
 
-`cats` is a Scala library that reinforces the **functional programming** design patterns by providing **consistent interfaces** to types that share similar properties, by using **type classes** and **evidence**.
+`cats` 😸 is a Scala library that reinforces **functional programming** design patterns by providing **consistent interfaces** to types that share similar properties
 
-Common type classes in big data are `Semigroup` and `Monoid`.
+----
 
-Common type classes everywhere are `Functor`, `Applicative`, and `Monad`.
+- It provides by **type classes** and **evidence** for them, for built-in Scala types.
+- Common type classes in big data are `Semigroup` and `Monoid`.
+- Common type classes everywhere are `Functor`, `Applicative`, and `Monad`.

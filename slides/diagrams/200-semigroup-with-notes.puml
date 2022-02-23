@@ -11,10 +11,10 @@ skinparam component {
 }
 
 component semigroup as "Semigroup"
-note left of semigroup: "Can plus"
+note left of semigroup: Can plus
 
 component monoid as "Monoid"
-note left of monoid: "Has zero"
+note left of monoid: Has zero
 
 semigroup --> monoid
 @enduml

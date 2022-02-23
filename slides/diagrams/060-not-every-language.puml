@@ -22,16 +22,14 @@ skinparam component<< Language >> {
 
 component scala as "Scala" << Language >>
 
-component cats as "cats"
-
-component cats_effect as "cats-effect"
-
-cats_effect --> cats
-
+component cats as "cats" << Library >>
 component scalatest as "ScalaTest" << Library >>
 
 cats --> scala
 scalatest --> scala
+
+component cats_effect as "cats-effect" << Library >>
+cats_effect --> cats
 
 component functor as "Functor" << New idea >>
 component monad as "Monad" << New idea >>

@@ -34,9 +34,6 @@ cats_effect --> cats
 component functor as "Functor" << New idea >>
 component monad as "Monad" << New idea >>
 
-component side_effect as "Side effect" << New idea >>
-side_effect --> cats_effect
-
 interface category_theory as "Category theory"
 
 functor --> category_theory
@@ -48,5 +45,26 @@ component kotlin as "Kotlin" << Language >>
 category_theory --> cats
 category_theory ---> haskell
 category_theory ---> kotlin
+
+component circe as "circe" << Library >>
+component http4s as "http4s" << Library >>
+
+circe --> cats_effect
+http4s --> cats_effect
+
+note left of circe : JSON parsing
+note right of http4s : web server
+
+component play as "Play" << Library >>
+component akka as "Akka" << Library >>
+
+play --> scala
+akka --> scala
+
+component java as "Java" << Language >>
+component spring as "Spring" << Library >>
+
+scala --> java
+spring --> java
 
 @enduml

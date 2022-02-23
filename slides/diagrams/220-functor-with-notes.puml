@@ -11,21 +11,21 @@ skinparam component {
 }
 
 component semigroup as "Semigroup"
-note left of semigroup: "Can plus"
+note left of semigroup: Can plus
 
 component monoid as "Monoid"
-note left of monoid: "Has zero"
+note left of monoid: Has zero
 
 semigroup --> monoid
 
 component functor as "Functor"
-note right of functor: "Inner structure can be changed with map"
+note right of functor: Inner structure can be changed with map
 
 component applicative as "Applicative"
-note right of applicative: "Outer structures can interact"
+note right of applicative: Outer structures can interact
 
 component monad as "Monad"
-note right of monad: "Inner structure can influence outer structures with flatMap"
+note right of monad: Inner structure can influence outer structures with flatMap
 
 functor --> applicative
 applicative --> monad
