@@ -1,0 +1,37 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  fontColor white
+  backgroundColor #586ba4
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< New idea >> {
+  fontColor black
+  backgroundColor #ffe696
+}
+
+component int as "Int" << Built-in >>
+component string as "String" << Built-in >>
+component frac as "Frac" << First-party >>
+component json_array as "JsonArray" << Third-party >>
+
+interface mammal as "Mammal" << Superclass >>
+component dog as "Dog" << Subclass >>
+component cat as "Cat" << Subclass >>
+
+mammal <-- dog
+mammal <-- cat
+
+interface no_parent as "No common parent"
+
+no_parent <-- int
+no_parent <-- string
+no_parent <-- frac
+no_parent <-- json_array
+
+@enduml

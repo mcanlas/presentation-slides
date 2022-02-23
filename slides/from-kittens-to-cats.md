@@ -20,7 +20,7 @@ The theory behind `cats`
 
 ----
 
-# Cats
+# Cats 😸
 
 ---
 
@@ -151,7 +151,10 @@ Interface as in "coding experience", not literally a Java `interface`
 ### Built-in types
 
 ```scala
+// Int
 1 + 2 == 3
+
+// String
 "foo" + "bar" == "foobar"
 ```
 
@@ -166,13 +169,15 @@ case class Frac(numerator: Int, denominator: Int)
 Frac(1, 2) + Frac(3, 4) == Frac(7, 8)
 ```
 
+## 💥
+
 ----
 
 ### `+` could be a normal method off of `Frac`...
 
 ```scala
 case class Frac(numerator: Int, denominator: Int) {
-  def `+`: Frac =
+  def `+`(that: Frac): Frac =
     ???
 }
 ```
@@ -181,7 +186,58 @@ case class Frac(numerator: Int, denominator: Int) {
 
 ### But what about structural sharing with `Int` and `String`?
 
----
+![](diagrams/100-no-common-parent.png)
+
+----
+
+![](diagrams/110-can-plus.png)
+
+We introduce a **new abstraction** that describes the structure of the original types.
+
+----
+
+```scala
+1 |+| 2 == 3
+
+"foo" |+| "bar" == "foobar"
+
+Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
+```
+
+`CanPlus[_]` also provides a `|+|` operator to all types that support this structure...
+
+...regardless of the type's owner.
+
+----
+
+### `CanPlus[_]` is an example of a **type class**
+
+a mechanism in Scala/Haskell used to describe the structure of other types
+
+
+----
+
+## Instances
+
+- `CanPlus[Int]` describes that `Int` can plus...
+- `CanPlus[String]` describes that `String` can plus...
+- `CanPlus[Frac]` describes that `Frac` can plus...
+- Also called providing "proof" or "evidence" with a **type class instance**
+
+----
+
+## `cats` provides...
+
+- Common **type classes**
+- Evidence for those type classes for built-in Scala types
+- The opportunity for first or third-party types to provide evidence
+
+----
+
+## 📚 Not covered
+
+- `cats` syntax
+- `implicit` injection
 
 ---
 

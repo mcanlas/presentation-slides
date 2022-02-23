@@ -1,0 +1,38 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  fontColor white
+  backgroundColor #586ba4
+  borderColor #222
+  borderThickness 2
+}
+
+skinparam component<< New idea >> {
+  stereotypeFontColor black
+  fontColor black
+  backgroundColor #ffe696
+}
+
+component int as "Int\ncan plus" << Cats >>
+component string as "String\ncan plus" << Cats >>
+component frac as "Frac\ncan plus" << First-party >>
+component json_array as "JsonArray\ncan plus" << Third-party >>
+
+interface mammal as "Mammal" << Superclass >>
+component dog as "Dog" << Subclass >>
+component cat as "Cat" << Subclass >>
+
+mammal <-- dog
+mammal <-- cat
+
+component no_parent as "CanPlus[_]" << New idea >>
+
+no_parent --> int
+no_parent --> string
+no_parent --> frac
+no_parent --> json_array
+
+@enduml
