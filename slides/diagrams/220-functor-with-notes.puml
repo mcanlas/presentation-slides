@@ -19,13 +19,13 @@ note left of monoid: "Has zero"
 semigroup --> monoid
 
 component functor as "Functor"
-note right of functor: "Inner structure can be changed"
+note right of functor: "Inner structure can be changed with map"
 
 component applicative as "Applicative"
 note right of applicative: "Outer structures can interact"
 
 component monad as "Monad"
-note right of monad: "Inner structure can influence outer structures"
+note right of monad: "Inner structure can influence outer structures with flatMap"
 
 functor --> applicative
 applicative --> monad

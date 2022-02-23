@@ -56,6 +56,14 @@ Scala is a multi-paradigm language.
 
 ----
 
+## 📚 Not covered
+
+- **referential transparency**
+  - **immutability**
+  - **side-effect** management
+
+----
+
 ![](diagrams/040-new-ideas.png)
 
 `cats` introduces new concepts to Scala
@@ -393,7 +401,7 @@ optionString.map(_ + " phd")
 | `IO[A]`        | Side-effect |
 | `Either[E, A]` | Error capture |
 | `B => A`       | Dependency on `B` |
-| `Decoder[A]`   | Ability to produce `A` |
+| `JsonDecoder[A]`  | Ability to produce `A` |
 
 ## 🤔
 
@@ -528,12 +536,15 @@ Examination of `n` can influence the optionality (or structure) of `somePos`
 def flatMap(f: A => F[B]): F[B]
 ```
 
+The structure `F[B]` depends on `A`
+
 ----
 
 ## `Monad[F]`
 #### `CanFlatMap[F]`
 
 - Any strategy `F` that can be ordered or **sequenced** with itself
+  - A "monadic" workflow
 - Also a `functor`
 
 ----
@@ -542,17 +553,40 @@ def flatMap(f: A => F[B]): F[B]
 
 ----
 
-Length (or structure) of `xy` depends on 
+### 🤔 Applicative
+
+- Hardest to build an intuition for
+- Two capabilities
 
 ----
 
-### Group #2: General purpose type classes for `F[_]` structures
+### 1️⃣ It can wrap
+## `A => F[A]`
+#### `CanWrap[_]`
 
-- `Functor`
-- `Applicative`
-- `Monad`
+Also called **pure** or **point**
 
 ----
+
+### 2️⃣ Sequencing...?
+
+```scala
+(fa: F[A], fb: F[B]) => F[(A, B)]
+```
+
+----
+
+```scala
+(fa: F[A], fb: F[B]) => F[(A, B)]
+```
+
+- The outsides can interact (new)
+- The insides can interact (from `map`)
+- But the inside cannot affect the outside (unlike `flatMap`)
+
+----
+
+![](diagrams/220-functor-with-notes.png)
 
 ---
 
@@ -570,13 +604,47 @@ Length (or structure) of `xy` depends on
 - Is highly composable
 - Leverages previous experience
 
+----
+
+| Type             | Description |
+|------------------| --- |
+| `IO[A]`          | Side-effect |
+| `Either[E, A]`   | Error capture |
+| `B => A`         | Dependency on `B` |
+| `JsonDecoder[A]` | Ability to produce `A` |
+
+----
+
+## Why `Functor`?
+
+- Every `Monad` is a `Functor`
+- Can change the inner structure without changing the outer structure
+  - Can change the "presentation" (`A => B`) of a value without changing the "strategy"
+
+----
+
+## Why `Monad`?
+
+- Can consistently model dependent steps
+- Can more easily communicate error workflow
+  - "Fail fast" or "first one wins"
+
+----
+
+## 📚 Not covered
+
+- `cats-effect`
+  - hint: `IO[A]`
+- **monad transformers**
+  - two monads combined to make one monad
+
 ---
 
 # Recap
 
 ----
 
-`cats` is a Scala library that enhances the **functional programming** experience by providing **consistent interfaces** to types that share similar properties by using **type classes** and **evidence**.
+`cats` is a Scala library that reinforces the **functional programming** design patterns by providing **consistent interfaces** to types that share similar properties, by using **type classes** and **evidence**.
 
 Common type classes in big data are `Semigroup` and `Monoid`.
 
