@@ -306,14 +306,14 @@ Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
 
 ----
 
-`Monoid[_]` describes a "zero" or "empty" value
+`Monoid[_]` describes a **zero** or **empty** value
 
 ```scala
-x |+| Semigroup[Int].empty == x // 0
+x |+| Monoid[Int].empty == x // 0
 
-"foo" |+| Semigroup[String].empty == x // ""
+"foo" |+| Monoid[String].empty == x // ""
 
-Frac(1, 2) |+| Semigroup[Frac].empty == x // Frac(0, 1)
+Frac(1, 2) |+| Monoid[Frac].empty == x // Frac(0, 1)
 ```
 ----
 
