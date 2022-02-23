@@ -212,25 +212,29 @@ Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
 
 ### `CanPlus[_]` is an example of a **type class**
 
-a mechanism in Scala/Haskell used to describe the structure of other types
+...a compiler-supported feature in Scala/Haskell used to describe the structure of other types
+
+...analagous to the way `abstract class`es or `trait`s describe structure for first-party, object-oriented types
 
 
 ----
 
-## Instances
-
 - `CanPlus[Int]` describes that `Int` can plus...
 - `CanPlus[String]` describes that `String` can plus...
 - `CanPlus[Frac]` describes that `Frac` can plus...
+
+----
+
 - Also called providing "proof" or "evidence" with a **type class instance**
+- Analogous to implementing an `abstract` `class`/`trait`
 
 ----
 
 ## `cats` provides...
 
 - Common **type classes**
-- Evidence for those type classes for built-in Scala types
-- The opportunity for first or third-party types to provide evidence
+- Evidence for those type classes, for built-in Scala types
+- The opportunity to provide evidence for first or third-party types
 
 ----
 
@@ -241,11 +245,330 @@ a mechanism in Scala/Haskell used to describe the structure of other types
 
 ---
 
-# Scala review
+# Type classes
+
+----
+
+### `Functor`, `Monad`, `Monoid` are all examples of **type classes** provided by `cats`
+
+----
+
+### Yes, the names are terrible 😭
+
+----
+
+## Five most common
+
+Split into two groups
+
+----
+
+## Group #1: **Big data** type classes
+
+![](diagrams/200-semigroup.png)
+
+----
+
+![](diagrams/200-semigroup.png)
+
+Type classes can also inherit from others
+
+e.g. every `Monoid` is a `Semigroup`
+
+----
+
+### `CanPlus[_]` is actually `Semigroup[_]`
+
+Describes the ability to `|+|` within a type
+
+```scala
+1 |+| 2 == 3
+
+"foo" |+| "bar" == "foobar"
+
+Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
+```
+
+----
+
+`Monoid[_]` describes a "zero" or "empty" value
+
+```scala
+x |+| Semigroup[Int].empty == x // 0
+
+"foo" |+| Semigroup[String].empty == x // ""
+
+Frac(1, 2) |+| Semigroup[Frac].empty == x // Frac(0, 1)
+```
+----
+
+![](diagrams/200-semigroup-with-notes.png)
 
 ---
 
-# The structure
+# Scala review
+
+----
+
+## Mapping
+
+```scala
+List(1, 2, 3).map(_ + 1)
+List("ren", "stimpy").map(_.length)
+```
+
+----
+
+## More mapping
+
+```scala
+Option(3).map(_ + 1)
+Try("ren").map(_.length)
+```
+
+----
+
+## Various structures "can `map`"
+
+----
+
+## They are all "containers"
+
+with an "inside" and an "outside"
+
+----
+
+| Type        | Description     |
+|-------------|-----------------|
+| `List[A]`   | Length, multitude |
+| `Option[A]` | Optionality     |
+| `Try[A]`    | Success |
+
+----
+
+### Mapping cannot influence the container
+
+```scala
+// Some => Some
+// or None => None
+optionInt.map(_ + 1)
+
+// strings.length == strings(_ + " phd").length
+strings(_ + " phd")
+```
+
+----
+
+### Also true for every kind of `List[_]`
+
+```scala
+// Some => Some
+// or None => None
+optionInt.map(_ + 1)
+optionDouble.map(_ + 3.0)
+optionString.map(_ + " phd")
+```
+
+----
+
+- `CanMap[List]` describes that every `List[_]` can `map`
+- `CanMap[Option]` describes that every `Option[_]` can `map`
+
+----
+
+### `CanMap[_]` is actually `Functor[_]`
+
+----
+
+## 📚 Not covered
+
+**Laws**: other structural properties types need to obey
+
+`Set` and `Future` are not "lawful" functors despite having `map`
+
+----
+
+| Type           | Description |
+|----------------| --- |
+| `IO[A]`        | Side-effect |
+| `Either[E, A]` | Error capture |
+| `B => A`       | Dependency on `B` |
+| `Decoder[A]`   | Ability to produce `A` |
+
+## 🤔
+
+----
+
+## A `functor` isn't always a "container"
+
+----
+
+# `F[A]`
+
+A "strategy" `F` for producing/dealing with values of `A`
+
+---
+
+# Baking 🍰
+
+----
+
+1. Start with dry ingredients
+2. Mix in wet ingredients
+3. Put into a pan
+4. Bake!
+
+----
+
+- Start with dry ingredients
+  - Mix in wet ingredients
+    - Put into a pan
+      - Bake!
+
+----
+
+## Step N depends on step N - 1
+
+----
+
+```scala
+val xy = 
+  for {
+    x <- List("a", "b", "c", "d")
+    y <- List(1, 2)
+  } yield (x, y)
+```
+
+----
+
+```scala
+val xy = 
+  for {
+    x <- List("a", "b", "c", "d")
+    y <- List(1, 2)
+  } yield (x, y)
+```
+
+```scala
+def y(x: String) =
+  List(1, 2).map(y => (x, y))
+
+val xy =
+  List("a", "b", "c", "d")
+    .flatMap(y)
+```
+
+----
+
+A `for-comprehension` is a "synonym" for `flatMap`
+
+Aka **syntactic sugar** (not exclusive to `cats` or Scala)
+
+----
+
+```scala
+val xy = 
+  for {
+    x <- List("a", "b", "c", "d")
+    y <- List(1, 2)
+  } yield (x, y)
+```
+
+Length (or structure) of `xy` depends on each step
+
+`4 * 2 == 8`
+
+----
+
+```scala
+val xyz =
+  for {
+    x <- optionX
+    y <- optionY
+    z <- optionZ
+  } yield (x, y, z)
+```
+
+Optionality (or structure) of `xyz` depends on each step
+
+Can also "fail fast"
+
+----
+
+```scala
+def bannerPos(n: Int): Option[String] =
+  if (n > 0)
+    Some("yay")
+  else
+    None
+
+val banner =
+  for {
+    n <- optionN
+    pos <- bannerPos(n)
+  } yield pos
+```
+
+Examination of `n` can influence the optionality (or structure) of `somePos`
+
+----
+
+### `(n: Int) => Option[String]`
+
+----
+
+#### `(n: Int) => Option[String]`
+### `A => F[B]`
+
+----
+
+### `A => F[B]`
+
+```scala
+def flatMap(f: A => F[B]): F[B]
+```
+
+----
+
+## `Monad[F]`
+#### `CanFlatMap[F]`
+
+- Any strategy `F` that can be ordered or **sequenced** with itself
+- Also a `functor`
+
+----
+
+![](diagrams/210-functor.png)
+
+----
+
+Length (or structure) of `xy` depends on 
+
+----
+
+### Group #2: General purpose type classes for `F[_]` structures
+
+- `Functor`
+- `Applicative`
+- `Monad`
+
+----
+
+---
+
+## Why `cats`?
+
+----
+
+### As long as it is a `Monad`...
+
+----
+
+- Can use `for-comprehension`
+- Can use `map`
+- Can "fail fast"
+- Is highly composable
+- Leverages previous experience
 
 ---
 
@@ -254,3 +577,7 @@ a mechanism in Scala/Haskell used to describe the structure of other types
 ----
 
 `cats` is a Scala library that enhances the **functional programming** experience by providing **consistent interfaces** to types that share similar properties by using **type classes** and **evidence**.
+
+Common type classes in big data are `Semigroup` and `Monoid`.
+
+Common type classes everywhere are `Functor`, `Applicative`, and `Monad`.

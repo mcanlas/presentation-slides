@@ -1,0 +1,20 @@
+@startuml
+
+skinparam defaultTextAlignment center
+
+skinparam component {
+  fontStyle bold
+  fontColor white
+  backgroundColor #586ba4
+  borderColor #222
+  borderThickness 2
+}
+
+component semigroup as "Semigroup"
+note left of semigroup: "Can plus"
+
+component monoid as "Monoid"
+note left of monoid: "Has zero"
+
+semigroup --> monoid
+@enduml
