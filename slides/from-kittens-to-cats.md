@@ -246,6 +246,7 @@ Frac(1, 2) |+| Frac(3, 8) == Frac(7, 8)
 ## `cats` provides...
 
 - Common **type classes**
+  - Modeled after algebraic data structures in category theory
 - Evidence for those type classes, for built-in Scala types
 - The opportunity to provide evidence for first or third-party types
 
