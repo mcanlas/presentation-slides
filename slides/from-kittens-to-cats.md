@@ -176,7 +176,7 @@ Interface as in "coding experience", not literally a Java `interface`
 case class Frac(numerator: Int, denominator: Int)
 
 // built-in + not defined for Frac
-Frac(1, 2) + Frac(3, 4) == Frac(7, 8)
+Frac(1, 2) + Frac(3, 8) == Frac(7, 8)
 ```
 
 ## 💥
@@ -211,7 +211,7 @@ We introduce a **new abstraction** that describes the structure of the original 
 
 "foo" |+| "bar" == "foobar"
 
-Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
+Frac(1, 2) |+| Frac(3, 8) == Frac(7, 8)
 ```
 
 `CanPlus[_]` also provides a `|+|` operator to all types that support this structure...
@@ -301,7 +301,7 @@ Describes the ability to `|+|` within a type
 
 "foo" |+| "bar" == "foobar"
 
-Frac(1, 2) |+| Frac(3, 4) == Frac(7, 8)
+Frac(1, 2) |+| Frac(3, 8) == Frac(7, 8)
 ```
 
 ----
