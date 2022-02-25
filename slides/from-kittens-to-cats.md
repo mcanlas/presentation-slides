@@ -200,6 +200,15 @@ case class Frac(numerator: Int, denominator: Int) {
 
 ----
 
+![](diagrams/100-no-common-parent.png)
+
+In OOP, we share structure (identity + methods) via inheritance.
+
+`Object` doesn't count.
+<!-- .element: class="fragment" -->
+
+----
+
 ![](diagrams/110-can-plus.png)
 
 We introduce a **new abstraction** that describes the structure of the original types.
