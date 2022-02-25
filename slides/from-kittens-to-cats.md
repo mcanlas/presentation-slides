@@ -252,10 +252,19 @@ Frac(1, 2) |+| Frac(3, 8) == Frac(7, 8)
 
 ----
 
+| Cats | OOP |
+| ---- | --- |
+| Type class | Abstract class/interface |
+| Type class instance | Implemented class |
+
+(by analogy only, not an edict)
+
+----
+
 ## `cats` provides...
 
 - Common **type classes**
-  - Modeled after algebraic data structures in category theory
+  - Modeled after algebraic structures in category theory
 - Evidence for those type classes, for built-in Scala types
 - The opportunity to provide evidence for first or third-party types
 
