@@ -699,3 +699,12 @@ Also called **pure**
 - It provides **type classes** and **evidence** for them, for built-in Scala types
 - Common type classes in **big data** are `Semigroup` and `Monoid`
 - The most common everywhere are `Functor`, `Applicative`, and `Monad`
+
+---
+
+# 🤓 Nerd alert!
+
+- Categories (Scala types)
+- Arrows (capabilities?)
+- Morphisms
+- Laws
